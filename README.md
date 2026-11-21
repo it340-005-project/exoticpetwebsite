@@ -14,10 +14,20 @@ The package is written under `~/rpmbuild/RPMS/noarch/`.
 ## Install
 
 ```bash
-sudo dnf install -y ~/rpmbuild/RPMS/noarch/exotic-pets-site-1.0.0-1*.rpm
+sudo dnf install -y ~/rpmbuild/RPMS/noarch/exotic-pets-site-1.0.0-*.rpm
 ```
 
-Install enables nginx, writes `/etc/nginx/conf.d/exoticpets.conf`, and opens port `4187` when firewalld is running. The site listens on port `4187`.
+Install enables nginx, writes to `/etc/nginx/conf.d/exoticpets.conf`, allows SELinux to bind port `4187`, and opens that port when firewalld is running. 
+
+The site will listen on port `4187`.
+
+After, start nginx:
+
+```bash
+sudo dnf install -y policycoreutils-python-utils
+sudo semanage port -a -t http_port_t -p tcp 4187 || sudo semanage port -m -t http_port_t -p tcp 4187
+sudo systemctl start nginx
+```
 
 ## API address
 

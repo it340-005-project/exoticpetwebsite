@@ -1,6 +1,6 @@
 Name:           exotic-pets-site
 Version:        1.0.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Exotic Pets store site served by nginx
 
 License:        Proprietary
@@ -12,6 +12,7 @@ Requires:       gettext
 Requires(post): nginx
 Requires(post): gettext
 Requires(post): systemd
+Requires(post): policycoreutils-python-utils
 
 %description
 Static pages for the Exotic Pets store. Nginx serves the site and proxies
@@ -48,6 +49,9 @@ install -m 644 .env.example %{buildroot}/etc/exoticpets/site.env
 %post
 set -eu
 /usr/libexec/exoticpets/apply-nginx-conf.sh
+if command -v getenforce >/dev/null 2>&1 && [ "$(getenforce)" != "Disabled" ]; then
+  semanage port -a -t http_port_t -p tcp 4187 >/dev/null 2>&1 || semanage port -m -t http_port_t -p tcp 4187
+fi
 nginx -t
 systemctl enable --now nginx
 systemctl reload nginx
@@ -76,5 +80,7 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-2
+- Allow nginx to bind to port 4187 under SELinux.
 * Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-1
 - Package the static site for nginx on Fedora.
