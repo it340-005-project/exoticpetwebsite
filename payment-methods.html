@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment Methods - Exotic Pets Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body data-page="payment-methods">
+  <header class="navbar">
+    <div class="logo">
+      <img src="/images/logo.png" alt="Critter Kingdom" class="logo-img" />
+      <span class="logo-text">Critter Kingdom</span>
+    </div>
+    <nav class="nav-links">
+      <a href="/">Products</a>
+      <a href="/care-guide">Care Guide</a>
+      <a href="/cart">Cart (<span id="cart-count">0</span>)</a>
+      <a href="/orders" class="nav-signed-in">Orders</a>
+      <a href="/payment-methods" class="nav-signed-in active">Payment Methods</a>
+      <a href="/my-account">Account</a>
+      <a href="/login" class="nav-login-btn" id="nav-auth-link">Login</a>
+    </nav>
+  </header>
+  <main class="main">
+    <section class="hero">
+      <h1>Payment methods</h1>
+      <p>Cards saved on your account. New cards are added at checkout.</p>
+    </section>
+    <section class="panel-card" id="method-list"><p>Loading cards...</p></section>
+  </main>
+  <footer class="footer"><p>&copy; <span id="year"></span> Exotic Pets Store. IT340</p></footer>
+  <script src="/script.js" defer></script>
+  <script src="/payment-methods.js" defer></script>
+</body>
+</html>

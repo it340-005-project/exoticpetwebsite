@@ -1,0 +1,43 @@
+# Generated from this template. Do not edit the copy under /etc by hand
+# if you can re-run envsubst instead.
+# Set the root below to the directory that contains these HTML files.
+server {
+  listen ${LISTEN_PORT};
+  server_name _;
+
+  root /srv/exoticpetssite;
+
+  add_header X-Content-Type-Options nosniff always;
+  add_header X-Frame-Options DENY always;
+  add_header Referrer-Policy same-origin always;
+  add_header Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; form-action 'self'; frame-ancestors 'none'" always;
+
+  location ~ /\. { deny all; }
+  location = /package.json { deny all; }
+  location = /package-lock.json { deny all; }
+  location = /tsconfig.json { deny all; }
+  location ~ \.template$ { deny all; }
+
+  location /B_ {
+    proxy_pass ${BACKEND_URL};
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass_request_headers on;
+  }
+
+  location = / { try_files /index.html =404; }
+  location = /care-guide { try_files /care-guide.html =404; }
+  location = /cart { try_files /cart.html =404; }
+  location = /login { try_files /login.html =404; }
+  location = /quiz { try_files /quiz.html =404; }
+  location = /checkout { try_files /checkout.html =404; }
+  location = /confirmation { try_files /confirmation.html =404; }
+  location = /orders { try_files /orders.html =404; }
+  location = /payment-methods { try_files /payment-methods.html =404; }
+  location = /my-account { try_files /my-account.html =404; }
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}

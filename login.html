@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Exotic Pets Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles.css" />
+
+</head>
+<body data-page="login">
+  <header class="navbar">
+    <div class="logo">
+      <img src="/images/logo.png" alt="Critter Kingdom" class="logo-img" />
+      <span class="logo-text">Critter Kingdom</span>
+    </div>
+    <nav class="nav-links">
+      <a href="/">Products</a>
+      <a href="/care-guide">Care Guide</a>
+      <a href="/cart">Cart (<span id="cart-count">0</span>)</a>
+      <a href="/orders" class="nav-signed-in">Orders</a>
+      <a href="/payment-methods" class="nav-signed-in">Payment Methods</a>
+      <a href="/my-account">Account</a>
+      <a href="/login" class="nav-login-btn" id="nav-auth-link">Login</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="auth-wrapper">
+      <div class="auth-box">
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" type="button" data-tab="login">Sign In</button>
+          <button class="auth-tab" type="button" data-tab="register" id="register-tab-btn">Create Account</button>
+        </div>
+
+        <!-- Login Panel -->
+        <div class="auth-panel active" id="login-panel">
+          <h2>Welcome back</h2>
+          <p class="auth-subtitle">Sign in to your account to continue shopping.</p>
+          <div class="auth-error" id="login-error"></div>
+          <div class="auth-success" id="login-success"></div>
+          <div class="auth-field">
+            <label for="login-email">Email Address</label>
+            <input type="email" id="login-email" placeholder="you@example.com" />
+          </div>
+          <div class="auth-field">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" placeholder="••••••••" />
+          </div>
+          <button class="auth-submit" id="login-btn">Sign In</button>
+          <p class="auth-switch">Don't have an account? <button class="switch-btn" type="button" data-tab="register">Create one</button></p>
+        </div>
+
+        <!-- Register Panel -->
+        <div class="auth-panel" id="register-panel">
+          <h2>Create an account</h2>
+          <p class="auth-subtitle">Join us to start shopping for exotic pets.</p>
+          <div class="auth-error" id="register-error"></div>
+          <div class="auth-success" id="register-success"></div>
+          <div class="auth-field">
+            <label for="reg-name">Full Name</label>
+            <input type="text" id="reg-name" placeholder="Your name" />
+          </div>
+          <div class="auth-field">
+            <label for="reg-email">Email Address</label>
+            <input type="email" id="reg-email" placeholder="you@example.com" />
+          </div>
+          <div class="auth-field">
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" placeholder="At least 6 characters" />
+          </div>
+          <div class="auth-field">
+            <label for="reg-confirm">Confirm Password</label>
+            <input type="password" id="reg-confirm" placeholder="Re-enter password" />
+          </div>
+          <button class="auth-submit" id="register-btn">Create Account</button>
+          <p class="auth-switch">Already have an account? <button class="switch-btn" type="button" data-tab="login">Sign in</button></p>
+        </div>
+
+        <div class="auth-panel" id="mfa-panel" data-mode="verify">
+          <h2>Authenticator code</h2>
+          <p class="auth-subtitle">Enter the 6-digit code after your password is accepted.</p>
+          <div class="auth-error" id="mfa-error"></div>
+          <div class="auth-success" id="mfa-success"></div>
+          <div id="mfa-setup-box" class="mfa-setup is-hidden">
+            <p>Scan this QR code, or type the setup key into your authenticator app.</p>
+            <img id="mfa-qr" class="mfa-qr" alt="Authenticator QR code" />
+            <p id="mfa-secret" class="mfa-secret"></p>
+          </div>
+          <div class="auth-field">
+            <label for="mfa-code">6-digit code</label>
+            <input type="text" id="mfa-code" inputmode="numeric" maxlength="6" autocomplete="one-time-code" />
+          </div>
+          <button class="auth-submit" id="mfa-btn" type="button">Continue</button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Exotic Pets Store. IT340</p>
+  </footer>
+  <script src="/script.js" defer></script>
+  <script src="/login.js" defer></script>
+</body>
+</html>

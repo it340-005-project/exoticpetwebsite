@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Confirmed - Exotic Pets Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles.css" />
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <img src="/images/logo.png" alt="Critter Kingdom" class="logo-img" />
+      <span class="logo-text">Critter Kingdom</span>
+    </div>
+    <nav class="nav-links">
+      <a href="/">Products</a>
+      <a href="/care-guide">Care Guide</a>
+      <a href="/cart">Cart (<span id="cart-count">0</span>)</a>
+      <a href="/orders" class="nav-signed-in">Orders</a>
+      <a href="/payment-methods" class="nav-signed-in">Payment Methods</a>
+      <a href="/my-account">Account</a>
+      <a href="/login" class="nav-login-btn" id="nav-auth-link">Login</a>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="confirmation-container">
+      <div class="success-icon is-hidden" id="success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h1 id="order-status-heading">Loading your order...</h1>
+      <p id="order-status-message">We’re verifying your order details.</p>
+      <p id="order-status-detail"></p>
+      <div class="order-details" id="order-details">
+        <p>Loading order summary...</p>
+      </div>
+      <div class="email-note" id="order-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+        <p>We’ll show your order summary here once it is verified.</p>
+      </div>
+      <div class="action-buttons">
+        <button class="btn-primary" id="continue-shopping" type="button">Continue Shopping</button>
+        <button class="btn-secondary" id="print-receipt" type="button">Print Receipt</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Exotic Pets Store. IT340</p>
+  </footer>
+
+  <script src="/script.js" defer></script>
+  <script src="/confirmation.js" defer></script>
+</body>
+</html>

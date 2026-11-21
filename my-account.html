@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Account - Exotic Pets Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body data-page="my-account">
+  <header class="navbar">
+    <div class="logo">
+      <img src="/images/logo.png" alt="Critter Kingdom" class="logo-img" />
+      <span class="logo-text">Critter Kingdom</span>
+    </div>
+    <nav class="nav-links">
+      <a href="/">Products</a>
+      <a href="/care-guide">Care Guide</a>
+      <a href="/cart">Cart (<span id="cart-count">0</span>)</a>
+      <a href="/orders" class="nav-signed-in">Orders</a>
+      <a href="/payment-methods" class="nav-signed-in">Payment Methods</a>
+      <a href="/my-account" class="active">Account</a>
+      <a href="/login" class="nav-login-btn" id="nav-auth-link">Login</a>
+    </nav>
+  </header>
+  <main class="main account-layout">
+    <section class="hero">
+      <h1>My account</h1>
+      <p><span id="account-name"></span> · <span id="account-email-view"></span></p>
+      <p id="account-status" class="empty-note"></p>
+    </section>
+    <section class="panel-card">
+      <h2>Email</h2>
+      <form id="email-form" class="stack-form">
+        <label for="new-email">New email</label>
+        <input id="new-email" type="email" autocomplete="email" />
+        <label for="email-current-password">Current password</label>
+        <input id="email-current-password" type="password" autocomplete="current-password" />
+        <button type="submit">Update email</button>
+        <p id="email-note" class="empty-note"></p>
+      </form>
+    </section>
+    <section class="panel-card">
+      <h2>Password</h2>
+      <form id="password-form" class="stack-form">
+        <label for="password-current">Current password</label>
+        <input id="password-current" type="password" autocomplete="current-password" />
+        <label for="new-password">New password</label>
+        <input id="new-password" type="password" autocomplete="new-password" />
+        <button type="submit">Update password</button>
+        <p id="password-note" class="empty-note"></p>
+      </form>
+    </section>
+    <section class="panel-card">
+      <h2>Address</h2>
+      <form id="address-form" class="stack-form">
+        <label for="addr-street">Street</label>
+        <input id="addr-street" type="text" />
+        <label for="addr-apartment">Apartment</label>
+        <input id="addr-apartment" type="text" />
+        <label for="addr-city">City</label>
+        <input id="addr-city" type="text" />
+        <label for="addr-state">State</label>
+        <input id="addr-state" type="text" maxlength="2" />
+        <label for="addr-zip">ZIP</label>
+        <input id="addr-zip" type="text" />
+        <label for="addr-phone">Phone</label>
+        <input id="addr-phone" type="tel" />
+        <button type="submit">Update address</button>
+        <p id="address-note" class="empty-note"></p>
+      </form>
+    </section>
+    <section class="panel-card">
+      <h2>Authenticator</h2>
+      <p class="muted">Replace the app that creates your 6-digit codes. The current setup stays until the new code is accepted.</p>
+      <button id="mfa-reset-btn" class="text-button" type="button">Set up a new authenticator</button>
+      <div id="mfa-reset-box" class="mfa-setup is-hidden">
+        <img id="account-mfa-qr" class="mfa-qr" alt="New authenticator QR code" />
+        <p id="account-mfa-secret" class="mfa-secret"></p>
+        <form id="mfa-confirm-form" class="stack-form">
+          <label for="mfa-current">Current 6-digit code</label>
+          <input id="mfa-current" type="text" inputmode="numeric" maxlength="6" />
+          <label for="mfa-next">New 6-digit code</label>
+          <input id="mfa-next" type="text" inputmode="numeric" maxlength="6" />
+          <button type="submit">Save authenticator</button>
+        </form>
+      </div>
+      <p id="mfa-note" class="empty-note"></p>
+    </section>
+  </main>
+  <footer class="footer"><p>&copy; <span id="year"></span> Exotic Pets Store. IT340</p></footer>
+  <script src="/script.js" defer></script>
+  <script src="/account.js" defer></script>
+</body>
+</html>
