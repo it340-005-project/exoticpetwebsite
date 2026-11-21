@@ -1,6 +1,6 @@
 Name:           exotic-pets-site
 Version:        1.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Exotic Pets store site served by nginx
 
 License:        Proprietary
@@ -49,23 +49,17 @@ install -m 644 .env.example %{buildroot}/etc/exoticpets/site.env
 %post
 set -eu
 /usr/libexec/exoticpets/apply-nginx-conf.sh
-if command -v getenforce >/dev/null 2>&1 && [ "$(getenforce)" != "Disabled" ]; then
+if command -v getenforce >/dev/null 2>&1 && [ "$(getenforce)" != "Disabled" ] && command -v semanage >/dev/null 2>&1; then
   semanage port -a -t http_port_t -p tcp 4187 >/dev/null 2>&1 || semanage port -m -t http_port_t -p tcp 4187
+  semanage fcontext -a -t httpd_sys_content_t '/srv/exoticpetssite(/.*)?' >/dev/null 2>&1 || semanage fcontext -m -t httpd_sys_content_t '/srv/exoticpetssite(/.*)?'
+  restorecon -RF /srv/exoticpetssite
+  restorecon -F /etc/nginx/conf.d/exoticpets.conf
+  setsebool -P httpd_can_network_connect 1
 fi
 nginx -t
-systemctl enable --now nginx
-systemctl reload nginx
-if command -v getenforce >/dev/null 2>&1 && [ "$(getenforce)" = "Enforcing" ]; then
-  if command -v semanage >/dev/null 2>&1; then
-    semanage fcontext -a -t httpd_sys_content_t '/srv/exoticpetssite(/.*)?' >/dev/null 2>&1 || semanage fcontext -m -t httpd_sys_content_t '/srv/exoticpetssite(/.*)?'
-    restorecon -RF /srv/exoticpetssite
-  elif command -v chcon >/dev/null 2>&1; then
-    chcon -R -t httpd_sys_content_t /srv/exoticpetssite
-  fi
-  if command -v setsebool >/dev/null 2>&1; then
-    setsebool -P httpd_can_network_connect 1
-  fi
-fi
+systemctl enable nginx
+systemctl reset-failed nginx >/dev/null 2>&1 || true
+systemctl restart nginx
 if systemctl is-active --quiet firewalld; then
   firewall-cmd --permanent --add-port=4187/tcp
   firewall-cmd --reload
@@ -79,8 +73,3 @@ if [ "$1" = 0 ]; then
   fi
 fi
 
-%changelog
-* Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-2
-- Allow nginx to bind to port 4187 under SELinux.
-* Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-1
-- Package the static site for nginx on Fedora.
