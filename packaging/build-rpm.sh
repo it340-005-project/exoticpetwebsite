@@ -21,6 +21,7 @@ mkdir -p "$SOURCE_DIR" "$DEST/nginx" "$DEST/packaging"
 find . -maxdepth 1 -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) -exec cp -a {} "$DEST/" \;
 cp -a nginx/exoticpets.conf.template "$DEST/nginx/"
 cp -a packaging/apply-nginx-conf.sh "$DEST/packaging/"
+cp -a packaging/prepare-nginx.sh "$DEST/packaging/"
 cp -a .env.example "$DEST/"
 
 tar -C "$STAGING" -czf "${SOURCE_DIR}/${NAME}-${VERSION}.tar.gz" "${NAME}-${VERSION}"
