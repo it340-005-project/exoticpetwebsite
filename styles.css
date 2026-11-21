@@ -86,6 +86,7 @@ body.is-signed-in a.nav-signed-in { display: inline; }
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 24px;
 }
+.products-grid > .empty-note { grid-column: 1 / -1; margin: 0; }
 
 .product-card {
   background: #fff;
@@ -486,7 +487,7 @@ body.is-signed-in a.nav-signed-in { display: inline; }
 /* --- additions --- */
 .form-error { background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; padding:12px 16px; border-radius:8px; margin:16px 0; font-size:.95rem; }
 .form-error[hidden] { display:none; }
-.checkout-button:disabled, .place-order-btn:disabled, .add-to-cart-btn:disabled { opacity:.6; cursor:not-allowed; }
+.checkout-button:disabled, .place-order-btn:disabled, .add-to-cart-btn:disabled, .auth-submit:disabled { opacity:.6; cursor:not-allowed; }
 
 .is-hidden { display: none !important; }
 .auth-error.is-visible, .auth-success.is-visible { display: block; }

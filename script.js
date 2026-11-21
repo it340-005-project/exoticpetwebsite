@@ -310,6 +310,14 @@ function asOrders(data) {
   });
 }
 
+/**
+ * @param {unknown} err
+ * @returns {boolean}
+ */
+function isDatabaseUnavailable(err) {
+  return err instanceof ApiError && err.status === 503;
+}
+
 function setYear() {
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
@@ -408,10 +416,19 @@ async function loadProductsPage() {
       : "<p>No animals found.</p>";
   }
 
+  /**
+   * @param {unknown} err
+   * @returns {string}
+   */
+  function catalogMessage(err) {
+    if (isDatabaseUnavailable(err)) return "Animals for sale are not available.";
+    return "Failed to load products.";
+  }
+
   try {
     await render(input instanceof HTMLInputElement ? input.value : "");
-  } catch (_err) {
-    grid.innerHTML = "<p>Failed to load products.</p>";
+  } catch (err) {
+    grid.innerHTML = "<p class=\"empty-note\">" + escapeHTML(catalogMessage(err)) + "</p>";
   }
 
   if (form instanceof HTMLFormElement && input instanceof HTMLInputElement) {
@@ -419,8 +436,8 @@ async function loadProductsPage() {
       event.preventDefault();
       try {
         await render(input.value);
-      } catch (_err) {
-        grid.innerHTML = "<p>Failed to load products.</p>";
+      } catch (err) {
+        grid.innerHTML = "<p class=\"empty-note\">" + escapeHTML(catalogMessage(err)) + "</p>";
       }
     });
   }

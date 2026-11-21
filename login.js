@@ -60,6 +60,35 @@ function showMfa(qrCode, secret, mode) {
   switchTab("mfa");
 }
 
+const SIGN_IN_UNAVAILABLE = "Signing in is not available.";
+
+/**
+ * @param {unknown} err
+ * @param {string} fallback
+ * @returns {string}
+ */
+function authErrorMessage(err, fallback) {
+  if (isDatabaseUnavailable(err)) return SIGN_IN_UNAVAILABLE;
+  return err instanceof Error ? err.message : fallback;
+}
+
+function markSignInUnavailable() {
+  showMsg("login-error", SIGN_IN_UNAVAILABLE, "error");
+  showMsg("register-error", SIGN_IN_UNAVAILABLE, "error");
+  showMsg("mfa-error", SIGN_IN_UNAVAILABLE, "error");
+  document.querySelectorAll("#login-panel input, #register-panel input, #mfa-panel input, #login-btn, #register-btn, #mfa-btn").forEach((node) => {
+    if (node instanceof HTMLInputElement || node instanceof HTMLButtonElement) node.disabled = true;
+  });
+}
+
+async function checkSignInAvailability() {
+  try {
+    await fetchJSON("/B_status");
+  } catch (err) {
+    if (isDatabaseUnavailable(err)) markSignInUnavailable();
+  }
+}
+
 async function submitLogin() {
   hideMsg("login-error");
   hideMsg("login-success");
@@ -87,7 +116,8 @@ async function submitLogin() {
     }
     showMfa("", "", "verify");
   } catch (err) {
-    showMsg("login-error", err instanceof Error ? err.message : "Something went wrong. Try again.", "error");
+    if (isDatabaseUnavailable(err)) markSignInUnavailable();
+    else showMsg("login-error", authErrorMessage(err, "Something went wrong. Try again."), "error");
   }
 }
 
@@ -124,7 +154,8 @@ async function submitRegister() {
     const setup = asSetup(data);
     showMfa(setup.qrCode, setup.secret, "setup");
   } catch (err) {
-    showMsg("register-error", err instanceof Error ? err.message : "Something went wrong. Try again.", "error");
+    if (isDatabaseUnavailable(err)) markSignInUnavailable();
+    else showMsg("register-error", authErrorMessage(err, "Something went wrong. Try again."), "error");
   }
 }
 
@@ -146,11 +177,13 @@ async function submitMfa() {
       window.location.href = nextUrl();
     }, 900);
   } catch (err) {
-    showMsg("mfa-error", err instanceof Error ? err.message : "That code was not accepted.", "error");
+    if (isDatabaseUnavailable(err)) markSignInUnavailable();
+    else showMsg("mfa-error", authErrorMessage(err, "That code was not accepted."), "error");
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  checkSignInAvailability();
   document.querySelectorAll("[data-tab]").forEach((node) => {
     node.addEventListener("click", () => {
       const tab = node instanceof HTMLElement ? node.dataset.tab : "";
