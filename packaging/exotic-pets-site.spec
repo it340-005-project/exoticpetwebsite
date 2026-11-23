@@ -82,13 +82,3 @@ if [ "$1" = 0 ]; then
   fi
 fi
 
-%changelog
-* Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-4
-- Free leftover nginx ports and disable the default listen 80 vhost.
-* Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-3
-- Label the site and nginx config, then restart nginx instead of reloading it.
-* Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-2
-- Allow nginx to bind to port 4187 under SELinux.
-* Sat Nov 21 2026 Exotic Pets <exoticpets@localhost> - 1.0.0-1
-- Package the static site for nginx on Fedora.
-
